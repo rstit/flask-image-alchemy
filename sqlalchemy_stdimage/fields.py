@@ -18,7 +18,10 @@ class StdImageField(types.TypeDecorator):
         if file:
             self.storage.write(file.read(), "temp"+file.name.split("/")[1])
             if self.variations:
-                process_thumbnail(file, self.variations, self.storage)
+                if self.process_async:
+                    pass
+                else:
+                    process_thumbnail(file, self.variations, self.storage)
             return {
                 "original": file.name
             }
