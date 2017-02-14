@@ -4,7 +4,7 @@ from sqlalchemy import Column, Integer
 
 TEMP_IMAGES_DIR = 'temp_images/'
 
-class TestTimestamp(BaseTest):
+class TestField(BaseTest):
 
     def define_models(self):
         class User(self.Base):
