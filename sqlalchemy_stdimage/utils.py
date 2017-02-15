@@ -20,11 +20,12 @@ def resize_image(image_file, options):
         height=options.get('height'),
         width=options.get('width')
     )
-    return img.save(image_file)
+    return img
 
 
 def process_thumbnail(file, variations, storage):
     for name, options in variations.items():
         new_file = resize_image(file, options)
         new_file_name = file.name + name
+        new_file_name = "test.png"
         storage.write(new_file, new_file_name)

@@ -25,9 +25,9 @@ class S3Storage(BaseStorage):
 
 class FileStorage(BaseStorage):
     def read(self, file_name):
-        with open(file_name, 'rb') as file:
+        with open(file_name, 'r') as file:
             return file.read()
 
     def write(self, data, file_name):
         with open(file_name, 'wb+') as file:
-            file.write(data)
+            data.save(file)
