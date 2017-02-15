@@ -1,7 +1,7 @@
 import os
 
 from flask import Flask
-from flask.ext.sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 from flask_image_alchemy.storages import S3Storage
 from flask_image_alchemy.fields import StdImageField
 
