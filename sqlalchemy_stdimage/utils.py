@@ -1,7 +1,11 @@
-from os.path import split, join
-
+from os.path import split, join, splitext
+from uuid import uuid4
 from wand.image import Image as WandImage
 
+
+def get_unique_filename(file_name):
+    _, file_extension = splitext(file_name)
+    return str(uuid4()) + file_extension
 
 def validate_variations(variations):
     for key, value in variations.items():
