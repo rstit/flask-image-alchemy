@@ -23,8 +23,8 @@ def create_app():
     # Flask-ImageAlchemy config
     app.config['AWS_ACCESS_KEY_ID'] = os.environ.get('AWS_ACCESS_KEY_ID')
     app.config['AWS_SECRET_ACCESS_KEY'] = os.environ.get('AWS_SECRET_ACCESS_KEY')
-    app.config['AWS_REGION_NAME'] = os.environ.get('AWS_REGION_NAME')
-    app.config['S3_BUCKET_NAME'] = os.environ.get('AWS_REGION_NAME')
+    app.config['AWS_REGION_NAME'] = os.environ.get('AWS_REGION_NAME', 'eu-central-1')
+    app.config['S3_BUCKET_NAME'] = os.environ.get('AWS_REGION_NAME', 'haraka-local')
 
     # init extensions
     admin.init_app(app)
