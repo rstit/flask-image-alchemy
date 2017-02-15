@@ -32,12 +32,15 @@ Usage
 -----
 Create model with StdImageField
 ```python
+storage = S3Storage()
+storage.init_app(app)
+
 class User(db.Model):
     __tablename__ = 'example'
     id = db.Column(db.Integer, primary_key=True)
     image = db.Column(
         StdImageField(
-            storage=S3Storage(),
+            storage=storage,
             variations={
                 'thumbnail': {"width": 100, "height": 100, "crop": True}
             }
