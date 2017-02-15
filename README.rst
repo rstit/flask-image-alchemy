@@ -17,36 +17,35 @@ Features
 
 Examples
 --------
-```python
-from sqlalchemy_stdimage.storages import S3Storage
+.. code:: python
+   from sqlalchemy_stdimage.storages import S3Storage
 
-from app.extensions import boto
-from sqlalchemy_stdimage.fields import StdImageField
+   from app.extensions import boto
+   from sqlalchemy_stdimage.fields import StdImageField
 
 
-class ExampleModel:
-    image = StdImageField(storage=S3Storage(boto.client), variations={
-        'thumbnail': {"width": 100, "height": 100, "crop": True}
-    })
-```
+   class ExampleModel:
+       image = StdImageField(storage=S3Storage(boto.client), variations={
+           'thumbnail': {"width": 100, "height": 100, "crop": True}
+       })
+
 
 BotoExtension
-```python
-from flask_boto import BotoClient
+.. code:: python
+   from flask_boto import BotoClient
 
-boto = BotoClient('s3')
-```
+   boto = BotoClient('s3')
+
 
 FlaskAdmin
-```python
-from sqlalchemy_stdimage.admin import StdImageField
+.. code:: python
+   from sqlalchemy_stdimage.admin import StdImageField
 
 
-class ExampleAdmin(ModelView):
-    form_overrides = {
-        'image': StdImageField
-    }
-```
+   class ExampleAdmin(ModelView):
+       form_overrides = {
+           'image': StdImageField
+       }
 
 Resources
 ---------
