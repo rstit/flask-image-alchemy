@@ -3,3 +3,5 @@ psycopg2
 boto3
 flask
 wand
+flask-admin
+flask-sqlalchemy
