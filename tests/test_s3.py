@@ -1,29 +1,26 @@
-from boto3 import client
-from botocore.config import Config
-
 from flask_image_alchemy.storages import S3Storage
 from .base import BaseTest
 from flask_image_alchemy.fields import StdImageField, StdImageFile
 from sqlalchemy import Column, Integer
 
 TEMP_IMAGES_DIR = 'temp_images/'
-AMAZON_SERVICE_NAME = 's3'
 AWS_ACCESS_KEY = 'xxx'
 AWS_SECRET = 'xxx'
 AWS_REGION_NAME = 'eu-central-1'
-BUCKET_NAME = 'haraka-local'
+BUCKET_NAME = ''
 
 
 class TestFieldVariations(BaseTest):
 
     def setUp(self):
-        self.client = client(
-            AMAZON_SERVICE_NAME,
-            aws_access_key_id=AWS_ACCESS_KEY,
-            aws_secret_access_key=AWS_SECRET,
-            region_name=AWS_REGION_NAME,
-            config=Config(signature_version='s3v4')
-        )
+        class App():
+            config = {}
+        app = App()
+        app.config['AWS_ACCESS_KEY_ID'] = AWS_ACCESS_KEY
+        app.config['AWS_SECRET_ACCESS_KEY'] = AWS_SECRET
+        app.config['AWS_REGION_NAME'] = AWS_REGION_NAME
+        app.config['S3_BUCKET_NAME'] = BUCKET_NAME
+        self.s3_storage = S3Storage()
         super().setUp()
 
     def define_models(self):
@@ -32,7 +29,7 @@ class TestFieldVariations(BaseTest):
             id = Column(Integer, primary_key=True)
             avatar = Column(
                 StdImageField(
-                    storage=S3Storage(self.client),
+                    storage=,
                     variations={"thumbnail": {'height': 100, 'width': 100}}
                 ),
                 nullable=False
