@@ -1,3 +1,5 @@
+from os.path import split, join
+
 from wand.image import Image as WandImage
 
 
@@ -13,7 +15,6 @@ def validate_variations(variations):
             raise ValueError("Missing 'width' value")
     return variations
 
-
 def resize_image(image_file, options):
     img = WandImage(file=image_file)
     img.resize(
@@ -22,10 +23,18 @@ def resize_image(image_file, options):
     )
     return img
 
+def create_new_filename(original_file_path, thumbnail_name):
+    pathname, file_name = split(original_file_path)
+    original_file_path, ext = file_name.split(".")
+    new_file_name = "{old_name}.{thumbnail_name}.{ext}".format(
+        old_name=original_file_path,
+        thumbnail_name=thumbnail_name,
+        ext=ext,
+    )
+    return join(pathname, new_file_name)
 
 def process_thumbnail(file, variations, storage):
     for name, options in variations.items():
         new_file = resize_image(file, options)
-        new_file_name = file.name + name
-        new_file_name = "test.png"
+        new_file_name = create_new_filename(file.name, name)
         storage.write(new_file, new_file_name)
