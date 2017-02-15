@@ -29,10 +29,11 @@ class StdImageField(types.TypeDecorator):
 
     def process_bind_param(self, file, dialect):
         if file:
-            self.storage.write(file.read(), get_unique_filename(file.name))
-            data = {"original": file.name}
+            filename = get_unique_filename(file.name)
+            self.storage.write(file.read(), filename)
+            data = {"original": filename}
             if self.variations:
-                values = process_thumbnail(file, self.variations, self.storage)
+                values = process_thumbnail(file, filename, self.variations, self.storage)
                 data.update({key:value for key, value in values})
             return data
 

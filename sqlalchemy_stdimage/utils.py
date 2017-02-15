@@ -37,10 +37,10 @@ def create_new_filename(original_file_path, thumbnail_name):
     )
     return join(pathname, new_file_name)
 
-def process_thumbnail(file, variations, storage):
+def process_thumbnail(file, filename, variations, storage):
     for name, options in variations.items():
         file.seek(0)
         new_file = resize_image(file, options)
-        new_file_name = create_new_filename(file.name, name)
+        new_file_name = create_new_filename(filename, name)
         storage.write(new_file.make_blob(), new_file_name)
         yield name, new_file_name
