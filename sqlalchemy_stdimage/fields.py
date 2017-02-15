@@ -1,6 +1,6 @@
 import sqlalchemy.types as types
 
-from sqlalchemy_stdimage.utils import process_thumbnail
+from sqlalchemy_stdimage.utils import process_thumbnail, validate_variations
 from .storages import FileStorage
 
 class StdImageField(types.TypeDecorator):
@@ -11,7 +11,7 @@ class StdImageField(types.TypeDecorator):
                  process_async=False, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.storage = storage
-        self.variations = variations
+        self.variations = validate_variations(variations) if variations else None
         self.process_async = process_async
 
     def process_bind_param(self, file, dialect):

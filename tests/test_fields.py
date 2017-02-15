@@ -10,7 +10,7 @@ class TestField(BaseTest):
         class User(self.Base):
             __tablename__ = 'user'
             id = Column(Integer, primary_key=True)
-            avatar = Column(StdImageField(), nullable=False)
+            avatar = Column(StdImageField(variations={"thumbnail": {'height': 100, 'width': 100}}), nullable=False)
         self.User = User
 
     def test_create_instance(self):

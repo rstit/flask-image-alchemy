@@ -1,4 +1,4 @@
-SQLAlchemy-Utils
+SQLAlchemy-StdImage
 ================
 
 |Build Status| |Version Status|
