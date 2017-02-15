@@ -4,13 +4,21 @@ from sqlalchemy import Column, Integer
 
 TEMP_IMAGES_DIR = 'temp_images/'
 
-class TestField(BaseTest):
+
+class TestFieldUploadTo(BaseTest):
+
+    TEST_DIR = "temp_images/avatars"
 
     def define_models(self):
         class User(self.Base):
             __tablename__ = 'user'
             id = Column(Integer, primary_key=True)
-            avatar = Column(StdImageField(), nullable=False)
+            avatar = Column(
+                StdImageField(
+                    upload_to=self.TEST_DIR
+                ),
+                nullable=False
+            )
         self.User = User
 
     def test_create_instance(self):
@@ -24,6 +32,7 @@ class TestField(BaseTest):
             u.avatar = file
             self.session.add(u)
             self.session.commit()
+            self.assertTrue(self.TEST_DIR in u.avatar.url)
 
     def tearDown(self):
         for user in self.session.query(self.User):
