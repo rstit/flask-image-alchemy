@@ -1,3 +1,5 @@
+from unittest.mock import patch
+
 from flask_image_alchemy.storages import S3Storage
 from .base import BaseTest
 from flask_image_alchemy.fields import StdImageField, StdImageFile
@@ -7,7 +9,7 @@ TEMP_IMAGES_DIR = 'temp_images/'
 AWS_ACCESS_KEY = 'xxx'
 AWS_SECRET = 'xxx'
 AWS_REGION_NAME = 'eu-central-1'
-BUCKET_NAME = ''
+BUCKET_NAME = 'test'
 
 
 class TestS3Storage(BaseTest):
@@ -37,12 +39,14 @@ class TestS3Storage(BaseTest):
             )
         self.User = User
 
-    def test_create_instance(self):
+    @patch('botocore.client.BaseClient._make_api_call')
+    def test_create_instance(self, client):
         u = self.User()
         self.session.add(u)
         self.session.commit()
 
-    def test_upload(self):
+    @patch('botocore.client.BaseClient._make_api_call')
+    def test_upload(self, client):
         with open(TEMP_IMAGES_DIR + 'python_logo.png', 'rb') as file:
             u = self.User()
             u.avatar = file
@@ -53,8 +57,12 @@ class TestS3Storage(BaseTest):
             self.assertIsInstance(u.avatar.thumbnail, StdImageFile)
             self.assertIsNotNone(u.avatar.thumbnail.url)
 
-    def tearDown(self):
+    @patch('botocore.client.BaseClient._make_api_call')
+    def cleanUp(self, client):
         for user in self.session.query(self.User):
             if user.avatar:
                 user.avatar.delete(variations=True)
+
+    def tearDown(self):
+        self.cleanUp()
         super().tearDown()
