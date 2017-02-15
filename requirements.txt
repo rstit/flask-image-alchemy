@@ -6,3 +6,4 @@ wand
 flask-admin
 flask-sqlalchemy
 flask-wtf
+placebo
