@@ -51,4 +51,7 @@ class FileStorage(BaseStorage):
             file.write(data)
 
     def delete(self, file_name):
-        remove(file_name)
+        try:
+            remove(file_name)
+        except FileNotFoundError:
+            pass

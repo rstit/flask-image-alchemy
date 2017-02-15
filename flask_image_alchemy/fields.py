@@ -6,6 +6,8 @@ from .storages import FileStorage, BaseStorage
 
 
 class StdImageFile:
+    _variations = []
+
     def __init__(self, storage, json_data):
         self.storage = storage
         self.json_data = json_data
@@ -15,9 +17,13 @@ class StdImageFile:
         setattr(self, "url", self.json_data.pop("original", None))
         for name, url in self.json_data.items():
             setattr(self, name, StdImageFile(self.storage, {"original": url}))
+            self._variations.append(url)
 
-    def delete(self, all=False):
+    def delete(self, variations=False):
         self.storage.delete(self.url)
+        if variations:
+            for url in self._variations:
+                self.storage.delete(url)
 
 
 class StdImageField(types.TypeDecorator):

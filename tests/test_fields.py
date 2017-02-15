@@ -28,5 +28,5 @@ class TestField(BaseTest):
     def tearDown(self):
         for user in self.session.query(self.User):
             if user.avatar:
-                user.avatar.delete(all=True)
+                user.avatar.delete(variations=True)
         super().tearDown()
