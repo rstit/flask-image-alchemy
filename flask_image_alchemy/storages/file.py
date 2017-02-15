@@ -1,7 +1,7 @@
 from os import makedirs, remove
 from os.path import exists, split
 
-from flask.ext.image_alchemy.storages.base import BaseStorage
+from flask_image_alchemy.storages.base import BaseStorage
 
 
 class FileStorage(BaseStorage):

@@ -1,7 +1,7 @@
 from boto3 import client
 from botocore.config import Config
 
-from flask.ext.image_alchemy.storages.base import BaseStorage
+from flask_image_alchemy.storages.base import BaseStorage
 
 
 class S3Storage(BaseStorage):
