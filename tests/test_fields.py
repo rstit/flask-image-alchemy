@@ -51,4 +51,7 @@ class TestFieldVariations(BaseTest):
             u.avatar = file
             self.session.add(u)
             self.session.commit()
-            x = u.avatar
+            print(u.avatar)
+            print(u.avatar.url)
+            print(u.avatar.thumbnail)
+            print(u.avatar.thumbnail.url)
