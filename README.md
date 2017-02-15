@@ -1,6 +1,6 @@
 Flask-ImageAlchemy
 ===============================
-[![Build Status](https://travis-ci.org/rstit/flask-pyfcm.svg?branch=master)](https://travis-ci.org/rstit/flask-pyfcm)
+[![Build Status](https://travis-ci.org/rstit/flask-image-alchemy.svg?branch=master)](https://travis-ci.org/rstit/flask-image-alchemy)
 
 version number: 0.0.1
 
