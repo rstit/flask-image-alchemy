@@ -20,4 +20,6 @@ class BaseTest(TestCase):
     def define_models(self): pass
 
     def tearDown(self):
+        self.session.close_all()
         self.Base.metadata.drop_all(self.engine)
+        self.engine.dispose()

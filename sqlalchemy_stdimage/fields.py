@@ -4,6 +4,12 @@ from sqlalchemy_stdimage.utils import process_thumbnail, validate_variations
 from .storages import FileStorage, BaseStorage
 
 
+class StdImageFile:
+    def __init__(self, storage, json_data):
+        self.storage = storage
+        self.json_data = json_data
+
+
 class StdImageField(types.TypeDecorator):
 
     impl = types.JSON
@@ -24,4 +30,4 @@ class StdImageField(types.TypeDecorator):
             }
 
     def process_result_value(self, value, dialect):
-        return value.get("original")
+        return value
