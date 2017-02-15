@@ -1,10 +1,10 @@
-SQLAlchemy-StdImage
+Flask-ImageAlchemy
 ================
 
 |Build Status| |Version Status|
 
 
-Various utility functions, new data types and helpers for SQLAlchemy.
+Utility functions, new data types and helpers for SQLAlchemy.
 
 Features
 --------
