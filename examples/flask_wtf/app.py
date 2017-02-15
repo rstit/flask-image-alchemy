@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask
 from flask import render_template
 from flask_sqlalchemy import SQLAlchemy
@@ -20,6 +22,12 @@ def create_app():
     app.config['SECRET_KEY'] = '123456790'
     app.config['SQLALCHEMY_DATABASE_URI'] = \
         'postgresql+psycopg2://localhost:5432/test'
+
+    # Flask-ImageAlchemy config
+    app.config['AWS_ACCESS_KEY_ID'] = os.environ.get('AWS_ACCESS_KEY_ID')
+    app.config['AWS_SECRET_ACCESS_KEY'] = os.environ.get('AWS_SECRET_ACCESS_KEY')
+    app.config['AWS_REGION_NAME'] = os.environ.get('AWS_REGION_NAME', 'eu-central-1')
+    app.config['S3_BUCKET_NAME'] = os.environ.get('AWS_REGION_NAME', 'haraka-local')
 
     # init extensions
     db.init_app(app)
