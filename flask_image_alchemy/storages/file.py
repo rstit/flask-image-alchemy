@@ -22,10 +22,10 @@ class FileStorage(BaseStorage):
         with open(file_name, 'r') as file:
             return file.read()
 
-    def write(self, data, file_name):
+    def write(self, file_obj, file_name):
         self._create_dir_if_needed(file_name)
         with open(file_name, 'wb+') as file:
-            file.write(data)
+            file.write(file_obj.read())
 
     def delete(self, file_name):
         try:
