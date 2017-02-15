@@ -29,6 +29,9 @@ class S3Storage(BaseStorage):
     def write(self, data, file_name):
         super().write()
 
+    def delete(self, file_name):
+        super().delete()
+
 
 class FileStorage(BaseStorage):
 

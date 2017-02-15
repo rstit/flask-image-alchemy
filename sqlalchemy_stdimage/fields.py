@@ -19,6 +19,7 @@ class StdImageFile:
     def delete(self, all=False):
         self.storage.delete(self.url)
 
+
 class StdImageField(types.TypeDecorator):
 
     impl = types.JSON
