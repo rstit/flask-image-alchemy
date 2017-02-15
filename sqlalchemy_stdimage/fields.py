@@ -1,13 +1,15 @@
 import sqlalchemy.types as types
 
 from sqlalchemy_stdimage.utils import process_thumbnail, validate_variations
-from .storages import FileStorage
+from .storages import FileStorage, BaseStorage
+
 
 class StdImageField(types.TypeDecorator):
 
     impl = types.JSON
 
-    def __init__(self, storage=FileStorage(), variations=None, *args, **kwargs):
+    def __init__(self, storage:BaseStorage=FileStorage(), variations:dict=None,
+                 *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.storage = storage
         self.variations = validate_variations(variations) if variations else None
