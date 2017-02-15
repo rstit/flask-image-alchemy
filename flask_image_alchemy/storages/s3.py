@@ -16,14 +16,13 @@ class S3Storage(BaseStorage):
         self.SECRET = app.config.get('AWS_SECRET_ACCESS_KEY')
         self.REGION_NAME = app.config.get('AWS_REGION_NAME')
         self.BUCKET_NAME = app.config.get('S3_BUCKET_NAME')
-        if not config:
-            config = Config(signature_version='s3v4')
+        self.config = config if config else Config(signature_version='s3v4')
         self.client = client(
             's3',
             aws_access_key_id=self.ACCESS_KEY,
             aws_secret_access_key=self.SECRET,
             region_name=self.REGION_NAME,
-            config=config
+            config=self.config
         )
 
 
