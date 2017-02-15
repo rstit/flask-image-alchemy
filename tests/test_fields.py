@@ -55,3 +55,33 @@ class TestFieldVariations(BaseTest):
             print(u.avatar.url)
             print(u.avatar.thumbnail)
             print(u.avatar.thumbnail.url)
+
+
+class TestFieldUploadTo(BaseTest):
+
+    TEST_DIR = "temp_images/avatars"
+
+    def define_models(self):
+        class User(self.Base):
+            __tablename__ = 'user'
+            id = Column(Integer, primary_key=True)
+            avatar = Column(
+                StdImageField(
+                    upload_to=self.TEST_DIR
+                ),
+                nullable=False
+            )
+        self.User = User
+
+    def test_create_instance(self):
+        u = self.User()
+        self.session.add(u)
+        self.session.commit()
+
+    def test_upload(self):
+        with open(TEMP_IMAGES_DIR + 'python_logo.png', 'rb') as file:
+            u = self.User()
+            u.avatar = file
+            self.session.add(u)
+            self.session.commit()
+            self.assertTrue(self.TEST_DIR in u.avatar.url)

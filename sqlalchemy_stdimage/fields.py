@@ -22,14 +22,15 @@ class StdImageField(types.TypeDecorator):
     impl = types.JSON
 
     def __init__(self, storage:BaseStorage=FileStorage(), variations:dict=None,
-                 *args, **kwargs):
+                 upload_to=None, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.storage = storage
+        self.upload_to = upload_to
         self.variations = validate_variations(variations) if variations else None
 
     def process_bind_param(self, file, dialect):
         if file:
-            filename = get_unique_filename(file.name)
+            filename = get_unique_filename(file.name, self.upload_to)
             self.storage.write(file.read(), filename)
             data = {"original": filename}
             if self.variations:

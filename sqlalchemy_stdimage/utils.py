@@ -3,9 +3,12 @@ from uuid import uuid4
 from wand.image import Image as WandImage
 
 
-def get_unique_filename(file_name):
+def get_unique_filename(file_name, upload_to):
     _, file_extension = splitext(file_name)
-    return str(uuid4()) + file_extension
+    new_file_name = str(uuid4()) + file_extension
+    if upload_to:
+        return join(upload_to.strip('/'), new_file_name)
+    return new_file_name
 
 def validate_variations(variations):
     for key, value in variations.items():
