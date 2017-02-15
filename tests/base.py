@@ -14,6 +14,7 @@ class BaseTest(TestCase):
         self.define_models()
 
         self.session = Session()
+        self.Base.metadata.drop_all(self.engine)
         self.Base.metadata.create_all(self.engine)
 
     @abstractmethod
