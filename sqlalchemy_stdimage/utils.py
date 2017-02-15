@@ -39,3 +39,4 @@ def process_thumbnail(file, variations, storage):
         new_file = resize_image(file, options)
         new_file_name = create_new_filename(file.name, name)
         storage.write(new_file.make_blob(), new_file_name)
+        yield name, new_file_name

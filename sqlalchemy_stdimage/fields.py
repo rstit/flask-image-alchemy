@@ -15,6 +15,7 @@ class StdImageFile:
         for name, url in self.json_data.items():
             setattr(self, name, StdImageFile(self.storage, {"original": url}))
 
+
 class StdImageField(types.TypeDecorator):
 
     impl = types.JSON
@@ -28,11 +29,11 @@ class StdImageField(types.TypeDecorator):
     def process_bind_param(self, file, dialect):
         if file:
             self.storage.write(file.read(), "temp.png")
+            data = {"original": file.name}
             if self.variations:
-                process_thumbnail(file, self.variations, self.storage)
-            return {
-                "original": file.name
-            }
+                values = process_thumbnail(file, self.variations, self.storage)
+                data.update({key:value for key, value in values})
+            return data
 
     def process_result_value(self, value, dialect):
         return StdImageFile(self.storage, value)
