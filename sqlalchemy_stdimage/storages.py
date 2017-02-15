@@ -2,6 +2,7 @@ from abc import abstractmethod
 from os import makedirs
 
 from os.path import exists, split
+from os import remove
 
 
 class BaseStorage:
@@ -11,6 +12,9 @@ class BaseStorage:
 
     @abstractmethod
     def write(self, data, file_name): pass
+
+    @abstractmethod
+    def delete(self, file_name): pass
 
 
 class S3Storage(BaseStorage):
@@ -30,7 +34,6 @@ class FileStorage(BaseStorage):
 
     def _create_dir_if_needed(self, file_name):
         directory, _ =  split(file_name)
-        print(directory)
         if directory and not exists(directory):
             makedirs(directory)
 
@@ -42,3 +45,7 @@ class FileStorage(BaseStorage):
         self._create_dir_if_needed(file_name)
         with open(file_name, 'wb+') as file:
             file.write(data)
+
+    def delete(self, file_name):
+        print("deleting "+file_name)
+        remove(file_name)

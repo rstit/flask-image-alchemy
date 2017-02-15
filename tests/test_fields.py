@@ -25,6 +25,12 @@ class TestField(BaseTest):
             self.session.add(u)
             self.session.commit()
 
+    def tearDown(self):
+        for user in self.session.query(self.User):
+            if user.avatar:
+                user.avatar.delete(all=True)
+        super().tearDown()
+
 
 class TestFieldVariations(BaseTest):
 
@@ -56,6 +62,11 @@ class TestFieldVariations(BaseTest):
             print(u.avatar.thumbnail)
             print(u.avatar.thumbnail.url)
 
+    def tearDown(self):
+        for user in self.session.query(self.User):
+            if user.avatar:
+                user.avatar.delete(all=True)
+        super().tearDown()
 
 class TestFieldUploadTo(BaseTest):
 
@@ -85,3 +96,9 @@ class TestFieldUploadTo(BaseTest):
             self.session.add(u)
             self.session.commit()
             self.assertTrue(self.TEST_DIR in u.avatar.url)
+
+    def tearDown(self):
+        for user in self.session.query(self.User):
+            if user.avatar:
+                user.avatar.delete(all=True)
+        super().tearDown()

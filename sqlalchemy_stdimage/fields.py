@@ -16,13 +16,15 @@ class StdImageFile:
         for name, url in self.json_data.items():
             setattr(self, name, StdImageFile(self.storage, {"original": url}))
 
+    def delete(self, all=False):
+        self.storage.delete(self.url)
 
 class StdImageField(types.TypeDecorator):
 
     impl = types.JSON
 
     def __init__(self, storage:BaseStorage=FileStorage(), variations:dict=None,
-                 upload_to=None, *args, **kwargs):
+                 upload_to=None, media_path=None, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.storage = storage
         self.upload_to = upload_to
@@ -39,4 +41,5 @@ class StdImageField(types.TypeDecorator):
             return data
 
     def process_result_value(self, value, dialect):
-        return StdImageFile(self.storage, value)
+        if value:
+            return StdImageFile(self.storage, value)
