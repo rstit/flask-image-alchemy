@@ -17,7 +17,8 @@ Features
 
 Examples
 --------
-.. code:: python
+
+:: python
    from sqlalchemy_stdimage.storages import S3Storage
 
    from app.extensions import boto
@@ -31,14 +32,16 @@ Examples
 
 
 BotoExtension
-.. code:: python
+
+:: python
    from flask_boto import BotoClient
 
    boto = BotoClient('s3')
 
 
 FlaskAdmin
-.. code:: python
+
+:: python
    from sqlalchemy_stdimage.admin import StdImageField
 
 
