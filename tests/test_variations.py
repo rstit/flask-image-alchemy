@@ -1,5 +1,5 @@
 from .base import BaseTest
-from sqlalchemy_stdimage.fields import StdImageField
+from sqlalchemy_stdimage.fields import StdImageField, StdImageFile
 from sqlalchemy import Column, Integer
 
 TEMP_IMAGES_DIR = 'temp_images/'
@@ -30,10 +30,10 @@ class TestFieldVariations(BaseTest):
             u.avatar = file
             self.session.add(u)
             self.session.commit()
-            print(u.avatar)
-            print(u.avatar.url)
-            print(u.avatar.thumbnail)
-            print(u.avatar.thumbnail.url)
+            self.assertIsInstance(u.avatar, StdImageFile)
+            self.assertIsNotNone(u.avatar.url)
+            self.assertIsInstance(u.avatar.thumbnail, StdImageFile)
+            self.assertIsNotNone(u.avatar.thumbnail.url)
 
     def tearDown(self):
         for user in self.session.query(self.User):
