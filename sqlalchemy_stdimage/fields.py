@@ -8,7 +8,12 @@ class StdImageFile:
     def __init__(self, storage, json_data):
         self.storage = storage
         self.json_data = json_data
+        self._set_attributes()
 
+    def _set_attributes(self):
+        setattr(self, "url", self.json_data.pop("original", None))
+        for name, url in self.json_data.items():
+            setattr(self, name, StdImageFile(self.storage, {"original": url}))
 
 class StdImageField(types.TypeDecorator):
 
@@ -30,4 +35,4 @@ class StdImageField(types.TypeDecorator):
             }
 
     def process_result_value(self, value, dialect):
-        return value
+        return StdImageFile(self.storage, value)
