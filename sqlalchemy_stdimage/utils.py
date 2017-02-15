@@ -35,6 +35,7 @@ def create_new_filename(original_file_path, thumbnail_name):
 
 def process_thumbnail(file, variations, storage):
     for name, options in variations.items():
+        file.seek(0)
         new_file = resize_image(file, options)
         new_file_name = create_new_filename(file.name, name)
-        storage.write(new_file, new_file_name)
+        storage.write(new_file.make_blob(), new_file_name)

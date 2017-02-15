@@ -16,7 +16,7 @@ class StdImageField(types.TypeDecorator):
 
     def process_bind_param(self, file, dialect):
         if file:
-            # self.storage.write(file, "temp"+file.name.split("/")[1])
+            self.storage.write(file.read(), "temp.png")
             if self.variations:
                 process_thumbnail(file, self.variations, self.storage)
             return {

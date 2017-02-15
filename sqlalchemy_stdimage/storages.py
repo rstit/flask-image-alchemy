@@ -1,5 +1,7 @@
 from abc import abstractmethod
 
+from wand.image import Image
+
 
 class BaseStorage:
 
@@ -30,4 +32,4 @@ class FileStorage(BaseStorage):
 
     def write(self, data, file_name):
         with open(file_name, 'wb+') as file:
-            data.save(file)
+            file.write(data)
