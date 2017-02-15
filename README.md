@@ -9,6 +9,12 @@ Overview
 
 SQLAlchemy Standarized Image Field for Flask
 
+Features
+--------
+- Storage backends (FileStorage, S3Storage)
+- Thumbnails (wand)
+- Flask Application Factory compatible
+
 Installation
 --------------------
 
@@ -66,3 +72,4 @@ TODO
 * Flask-Admin widget
 * Coverage
 * Docs Page
+* Async Jobs (Image Processing)
