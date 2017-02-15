@@ -47,5 +47,4 @@ class FileStorage(BaseStorage):
             file.write(data)
 
     def delete(self, file_name):
-        print("deleting "+file_name)
         remove(file_name)
