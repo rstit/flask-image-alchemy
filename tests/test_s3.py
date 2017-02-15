@@ -10,7 +10,7 @@ AWS_REGION_NAME = 'eu-central-1'
 BUCKET_NAME = ''
 
 
-class TestFieldVariations(BaseTest):
+class TestS3Storage(BaseTest):
 
     def setUp(self):
         class App():
@@ -21,6 +21,7 @@ class TestFieldVariations(BaseTest):
         app.config['AWS_REGION_NAME'] = AWS_REGION_NAME
         app.config['S3_BUCKET_NAME'] = BUCKET_NAME
         self.s3_storage = S3Storage()
+        self.s3_storage.init_app(app)
         super().setUp()
 
     def define_models(self):
@@ -29,7 +30,7 @@ class TestFieldVariations(BaseTest):
             id = Column(Integer, primary_key=True)
             avatar = Column(
                 StdImageField(
-                    storage=,
+                    storage=self.s3_storage,
                     variations={"thumbnail": {'height': 100, 'width': 100}}
                 ),
                 nullable=False
@@ -55,5 +56,5 @@ class TestFieldVariations(BaseTest):
     def tearDown(self):
         for user in self.session.query(self.User):
             if user.avatar:
-                user.avatar.delete(all=True)
+                user.avatar.delete(variations=True)
         super().tearDown()
