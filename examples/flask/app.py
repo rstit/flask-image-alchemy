@@ -2,12 +2,10 @@ import os
 
 from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
-from flask_admin import Admin
 from flask_image_alchemy.storages import S3Storage
 from flask_image_alchemy.fields import StdImageField
 
 
-admin = Admin()
 db = SQLAlchemy()
 s3_storage = S3Storage()
 
@@ -27,7 +25,6 @@ def create_app():
     app.config['S3_BUCKET_NAME'] = os.environ.get('AWS_REGION_NAME', 'haraka-local')
 
     # init extensions
-    admin.init_app(app)
     db.init_app(app)
     s3_storage.init_app(app)
 
