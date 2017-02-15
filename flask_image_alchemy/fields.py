@@ -1,3 +1,5 @@
+from tempfile import SpooledTemporaryFile
+
 import sqlalchemy.types as types
 
 from flask_image_alchemy.utils import process_thumbnail, validate_variations, \
@@ -40,7 +42,11 @@ class StdImageField(types.TypeDecorator):
     def process_bind_param(self, file, dialect):
         if file:
             filename = get_unique_filename(file.name, self.upload_to)
-            self.storage.write(file.read(), filename)
+            # https://github.com/boto/boto3/issues/929
+            # https://github.com/matthewwithanm/django-imagekit/issues/391
+            temp_file = SpooledTemporaryFile()
+            temp_file.write(temp_file.read())
+            self.storage.write(temp_file, filename)
             data = {"original": filename}
             if self.variations:
                 values = process_thumbnail(file, filename, self.variations, self.storage)
