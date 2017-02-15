@@ -1,4 +1,5 @@
 flask
+flask-admin
 flask-sqlalchemy
 flask-image-alchemy
 SQLAlchemy==1.1.5

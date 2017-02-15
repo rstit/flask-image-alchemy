@@ -1,4 +1,5 @@
 flask
+flask-wtf
 flask-sqlalchemy
 flask-image-alchemy
 SQLAlchemy==1.1.5
