@@ -5,9 +5,11 @@
     <title>Title</title>
 </head>
 <body>
-<form action="/" method="post">
+<form method=post>
+    {{ form.csrf_token }}
     {{ form.image }}
-    <input type="submit"/>
+    <input type=submit>
 </form>
+{{filename}}
 </body>
 </html>
