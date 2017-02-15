@@ -19,18 +19,19 @@ class BaseStorage:
 
 class S3Storage(BaseStorage):
 
-    def __init__(self, s3_client):
+    def __init__(self, s3_client, bucket):
         self.s3_client = s3_client
+        self.bucket = bucket
         super().__init__()
 
     def read(self, file_name):
-        super().read()
+        self.s3_client.download_fileobj(self.bucket, file_name)
 
     def write(self, data, file_name):
-        super().write()
+        self.s3_client.upload_fileobj(data, self.bucket, file_name)
 
     def delete(self, file_name):
-        super().delete()
+        self.s3_client.delete_object(Bucket=self.bucket, Key=file_name)
 
 
 class FileStorage(BaseStorage):

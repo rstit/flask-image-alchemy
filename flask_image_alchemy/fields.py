@@ -1,6 +1,6 @@
 import sqlalchemy.types as types
 
-from sqlalchemy_stdimage.utils import process_thumbnail, validate_variations, \
+from flask_image_alchemy.utils import process_thumbnail, validate_variations, \
     get_unique_filename
 from .storages import FileStorage, BaseStorage
 

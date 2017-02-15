@@ -1,6 +1,6 @@
-from sqlalchemy_stdimage.storages import S3Storage
+from flask_image_alchemy.storages import S3Storage
 
-from sqlalchemy_stdimage.fields import StdImageField
+from flask_image_alchemy.fields import StdImageField
 
 
 class ExampleModel:

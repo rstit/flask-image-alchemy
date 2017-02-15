@@ -1,5 +1,5 @@
 from .base import BaseTest
-from sqlalchemy_stdimage.fields import StdImageField
+from flask_image_alchemy.fields import StdImageField
 from sqlalchemy import Column, Integer
 
 TEMP_IMAGES_DIR = 'temp_images/'
