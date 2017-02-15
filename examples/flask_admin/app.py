@@ -1,10 +1,6 @@
 from flask import Flask
-from flask import render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_admin import Admin
-from werkzeug.utils import secure_filename
-from flask_wtf import Form
-from flask_wtf.file import FileField, FileRequired
 
 from flask_image_alchemy.storages import S3Storage
 from flask_image_alchemy.fields import StdImageField
@@ -45,19 +41,10 @@ class ExampleModel(db.Model):
     )
 
 
-# define forms
-class ExampleModelForm(Form):
-    image = FileField('image', validators=[FileRequired()])
-
 # define routes
-@app.route('/', methods=('GET', 'POST'))
+@app.route('/')
 def index():
-    form = ExampleModelForm(csrf_enabled=False)
-    if form.validate_on_submit():
-        filename = secure_filename(form.image.data.filename)
-    else:
-        filename = None
-    return render_template('index.html', form=form, filename=filename)
+    return 'Hello World'
 
 
 def build_db():
