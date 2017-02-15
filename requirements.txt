@@ -5,3 +5,4 @@ flask
 wand
 flask-admin
 flask-sqlalchemy
+flask-wtf
