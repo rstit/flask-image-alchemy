@@ -41,7 +41,7 @@ class StdImageField(types.TypeDecorator):
 
     def process_bind_param(self, file, dialect):
         if file:
-            filename = get_unique_filename(file.name, self.upload_to)
+            filename = get_unique_filename(file.filename, self.upload_to)
             # https://github.com/boto/boto3/issues/929
             # https://github.com/matthewwithanm/django-imagekit/issues/391
             temp_file = SpooledTemporaryFile()
