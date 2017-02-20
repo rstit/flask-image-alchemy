@@ -8,14 +8,14 @@ from setuptools import setup
 
 setup(
     name='Flask-ImageAlchemy',
-    version='0.0.1',
+    version='0.0.2',
     url='https://github.com/rstit/flask-image-alchemy',
     license='BSD',
     author='RST-IT',
     author_email='piotr.poteralski@rst-it.com',
     description='SQLAlchemy Standarized Image Field for Flask',
     long_description=__doc__,
-    packages=['flask_image_alchemy'],
+    packages=['flask_image_alchemy', 'flask_image_alchemy.storages'],
     zip_safe=False,
     include_package_data=True,
     platforms='any',
