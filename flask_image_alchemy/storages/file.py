@@ -5,13 +5,15 @@ from flask_image_alchemy.storages.base import BaseStorage
 
 
 class FileStorage(BaseStorage):
-    def __init__(self, app=None, media_path=None):
-        if app:
-            self.init_app(app, media_path)
+    MEDIA_PATH = ''
 
-    def init_app(self, app, media_path):
+    def __init__(self, app=None):
+        if app:
+            self.init_app(app)
+
+    def init_app(self, app):
         self.app = app
-        self.media_path = media_path
+        self.MEDIA_PATH = app.config.get('MEDIA_PATH', '')
 
     def _create_dir_if_needed(self, file_name):
         directory, _ = split(file_name)
@@ -19,16 +21,17 @@ class FileStorage(BaseStorage):
             makedirs(directory)
 
     def read(self, file_name):
-        with open(file_name, 'r') as file:
+        with open(self.MEDIA_PATH + file_name, 'r') as file:
             return file.read()
 
     def write(self, file_obj, file_name):
-        self._create_dir_if_needed(file_name)
-        with open(file_name, 'wb+') as file:
+        full_path = self.MEDIA_PATH + file_name
+        self._create_dir_if_needed(full_path)
+        with open(full_path, 'wb+') as file:
             file.write(file_obj.read())
 
     def delete(self, file_name):
         try:
-            remove(file_name)
+            remove(self.MEDIA_PATH + file_name)
         except FileNotFoundError:
             pass
