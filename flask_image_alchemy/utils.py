@@ -31,7 +31,7 @@ def resize_image(image_file, options):
     )
     return img
 
-def create_new_filename(original_file_path, thumbnail_name):
+def build_filename(original_file_path, thumbnail_name):
     pathname, file_name = split(original_file_path)
     original_file_path, ext = file_name.split(".")
     new_file_name = "{old_name}.{thumbnail_name}.{ext}".format(
@@ -45,7 +45,7 @@ def process_thumbnail(original_file, original_file_name, variations, storage):
     for thumb_name, options in variations.items():
         original_file.seek(0)
         wand_image = resize_image(original_file, options)
-        new_file_name = create_new_filename(original_file_name, thumb_name)
+        new_file_name = build_filename(original_file_name, thumb_name)
         temp_file = TemporaryFile()
         wand_image.save(temp_file)
         storage.write(temp_file, new_file_name)
