@@ -1,4 +1,4 @@
-from tempfile import SpooledTemporaryFile
+from tempfile import TemporaryFile
 
 import sqlalchemy.types as types
 
@@ -44,8 +44,9 @@ class StdImageField(types.TypeDecorator):
             filename = get_unique_filename(file.filename, self.upload_to)
             # https://github.com/boto/boto3/issues/929
             # https://github.com/matthewwithanm/django-imagekit/issues/391
-            temp_file = SpooledTemporaryFile()
-            temp_file.write(temp_file.read())
+            temp_file = TemporaryFile()
+            temp_file.write(file.read())
+            temp_file.seek(0)
             self.storage.write(temp_file, filename)
             data = {"original": filename}
             if self.variations:

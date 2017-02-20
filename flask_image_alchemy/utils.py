@@ -48,5 +48,6 @@ def process_thumbnail(original_file, original_file_name, variations, storage):
         new_file_name = build_filename(original_file_name, thumb_name)
         temp_file = TemporaryFile()
         wand_image.save(temp_file)
+        temp_file.seek(0)
         storage.write(temp_file, new_file_name)
         yield thumb_name, new_file_name
