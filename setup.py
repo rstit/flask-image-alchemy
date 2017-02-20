@@ -8,7 +8,7 @@ from setuptools import setup
 
 setup(
     name='Flask-ImageAlchemy',
-    version='0.0.4',
+    version='0.0.5',
     url='https://github.com/rstit/flask-image-alchemy',
     license='BSD',
     author='RST-IT',

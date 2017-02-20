@@ -20,7 +20,7 @@ class StdImageFile:
             url = "{media_path}{path}"
             return url.format(media_path=self.storage.MEDIA_PATH)
         else:
-            url = "https://s3-{region_name}.amazonaws.com/{bucket_name}/{path}"
+            url = "https://{bucket_name}.s3-{region_name}.amazonaws.com/{path}"
             return url.format(
                 region_name=self.storage.REGION_NAME,
                 bucket_name=self.storage.BUCKET_NAME,
