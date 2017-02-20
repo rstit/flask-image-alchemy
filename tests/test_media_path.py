@@ -48,8 +48,8 @@ class TestFieldUploadTo(BaseTest):
             self.session.commit()
             self.assertTrue(self.TEST_DIR in u.avatar.url)
 
-    # def tearDown(self):
-    #     for user in self.session.query(self.User):
-    #         if user.avatar:
-    #             user.avatar.delete(variations=True)
-    #     super().tearDown()
+    def tearDown(self):
+        for user in self.session.query(self.User):
+            if user.avatar:
+                user.avatar.delete(variations=True)
+        super().tearDown()
