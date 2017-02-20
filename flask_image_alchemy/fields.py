@@ -18,7 +18,10 @@ class StdImageFile:
     def _build_full_url(self, path):
         if isinstance(self.storage, FileStorage):
             url = "{media_path}{path}"
-            return url.format(media_path=self.storage.MEDIA_PATH)
+            return url.format(
+                media_path=self.storage.MEDIA_PATH,
+                path=path
+            )
         else:
             url = "https://{bucket_name}.s3-{region_name}.amazonaws.com/{path}"
             return url.format(
