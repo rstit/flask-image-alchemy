@@ -72,6 +72,7 @@ And you have access to thumbnails:
 u.avatar.url
 u.avatar.thumbnail
 u.avatar.thumbnail.url
+u.avatar.thumbnail.path
 ```
 
 
