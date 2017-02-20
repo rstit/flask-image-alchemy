@@ -1,3 +1,5 @@
+from werkzeug.datastructures import FileStorage
+
 from .base import BaseTest
 from flask_image_alchemy.fields import StdImageField, StdImageFile
 from sqlalchemy import Column, Integer
@@ -26,6 +28,7 @@ class TestFieldVariations(BaseTest):
 
     def test_upload(self):
         with open(TEMP_IMAGES_DIR + 'python_logo.png', 'rb') as file:
+            file = FileStorage(file)
             u = self.User()
             u.avatar = file
             self.session.add(u)

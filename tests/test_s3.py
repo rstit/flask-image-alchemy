@@ -1,5 +1,7 @@
 from unittest.mock import patch
 
+from werkzeug.datastructures import FileStorage
+
 from flask_image_alchemy.storages import S3Storage
 from .base import BaseTest
 from flask_image_alchemy.fields import StdImageField, StdImageFile
@@ -48,6 +50,7 @@ class TestS3Storage(BaseTest):
     @patch('botocore.client.BaseClient._make_api_call')
     def test_upload(self, client):
         with open(TEMP_IMAGES_DIR + 'python_logo.png', 'rb') as file:
+            file = FileStorage(file)
             u = self.User()
             u.avatar = file
             self.session.add(u)
