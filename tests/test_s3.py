@@ -57,8 +57,10 @@ class TestS3Storage(BaseTest):
             self.session.commit()
             self.assertIsInstance(u.avatar, StdImageFile)
             self.assertIsNotNone(u.avatar.url)
+            self.assertIsNotNone(u.avatar.path)
             self.assertIsInstance(u.avatar.thumbnail, StdImageFile)
             self.assertIsNotNone(u.avatar.thumbnail.url)
+            self.assertIsNotNone(u.avatar.thumbnail.path)
 
     @patch('botocore.client.BaseClient._make_api_call')
     def cleanUp(self, client):

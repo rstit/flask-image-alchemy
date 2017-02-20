@@ -15,8 +15,23 @@ class StdImageFile:
         self.json_data = json_data
         self._set_attributes()
 
+    def _build_full_url(self, path):
+        if isinstance(self.storage, FileStorage):
+            url = "{media_path}{path}"
+            return url.format(media_path=self.storage.MEDIA_PATH)
+        else:
+            url = "https://s3-{region_name}.amazonaws.com/{bucket_name}/{path}"
+            return url.format(
+                region_name=self.storage.REGION_NAME,
+                bucket_name=self.storage.BUCKET_NAME,
+                path=path
+            )
+
     def _set_attributes(self):
-        setattr(self, "url", self.json_data.pop("original", None))
+        original_path = self.json_data.pop("original", None)
+        full_url = self._build_full_url(original_path)
+        setattr(self, "url", full_url)
+        setattr(self, "path", original_path)
         for name, url in self.json_data.items():
             setattr(self, name, StdImageFile(self.storage, {"original": url}))
             self._variations.append(url)
