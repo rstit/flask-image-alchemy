@@ -5,7 +5,7 @@ from .base import BaseTest
 from flask_image_alchemy.fields import StdImageField, StdImageFile
 from sqlalchemy import Column, Integer
 
-TEMP_IMAGES_DIR = 'temp_images/'
+TEMP_IMAGES_DIR = 'tests/temp_images/'
 AWS_ACCESS_KEY = 'xxx'
 AWS_SECRET = 'xxx'
 AWS_REGION_NAME = 'eu-central-1'

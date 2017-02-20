@@ -2,12 +2,12 @@ from .base import BaseTest
 from flask_image_alchemy.fields import StdImageField
 from sqlalchemy import Column, Integer
 
-TEMP_IMAGES_DIR = 'temp_images/'
+TEMP_IMAGES_DIR = 'tests/temp_images/'
 
 
 class TestFieldUploadTo(BaseTest):
 
-    TEST_DIR = "temp_images/avatars"
+    TEST_DIR = "tests/temp_images/avatars"
 
     def define_models(self):
         class User(self.Base):
