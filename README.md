@@ -55,6 +55,12 @@ AWS_REGION_NAME = "bucket-region"
 S3_BUCKET_NAME = "bucket-name"
 ```
 
+
+If you need filestorage with different MEDIA_PATH
+```python
+MEDIA_PATH = "/var/www/assets/images/"
+```
+
 Then you can use image field
 ```python
 u = User()
