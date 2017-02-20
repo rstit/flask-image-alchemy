@@ -17,19 +17,25 @@ class S3Storage(BaseStorage):
         if app:
             self.init_app(app, config=config)
 
+    def _create_client(self):
+        return client(
+            's3',
+            aws_access_key_id=self.ACCESS_KEY,
+            aws_secret_access_key=self.SECRET,
+            region_name=self.REGION_NAME,
+            config=self.config
+        )
+
     @property
     def client(self):
         ctx = stack.top
         if ctx is not None:
             if not hasattr(ctx, 's3_service'):
-                ctx.s3_service = client(
-                    's3',
-                    aws_access_key_id=self.ACCESS_KEY,
-                    aws_secret_access_key=self.SECRET,
-                    region_name=self.REGION_NAME,
-                    config=self.config
-                )
+                ctx.s3_service = self._create_client()
             return ctx.s3_service
+        else:
+            # If you want to use s3 client outside flask application
+            return self._create_client()
 
     def init_app(self, app, config=None):
         self.app = app

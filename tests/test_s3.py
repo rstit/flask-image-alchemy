@@ -1,5 +1,6 @@
 from unittest.mock import patch
 
+from flask import Flask
 from werkzeug.datastructures import FileStorage
 
 from flask_image_alchemy.storages import S3Storage
@@ -17,15 +18,13 @@ BUCKET_NAME = 'test'
 class TestS3Storage(BaseTest):
 
     def setUp(self):
-        class App():
-            config = {}
-        app = App()
-        app.config['AWS_ACCESS_KEY_ID'] = AWS_ACCESS_KEY
-        app.config['AWS_SECRET_ACCESS_KEY'] = AWS_SECRET
-        app.config['AWS_REGION_NAME'] = AWS_REGION_NAME
-        app.config['S3_BUCKET_NAME'] = BUCKET_NAME
+        self.app = Flask(__name__)
+        self.app.config['AWS_ACCESS_KEY_ID'] = AWS_ACCESS_KEY
+        self.app.config['AWS_SECRET_ACCESS_KEY'] = AWS_SECRET
+        self.app.config['AWS_REGION_NAME'] = AWS_REGION_NAME
+        self.app.config['S3_BUCKET_NAME'] = BUCKET_NAME
         self.s3_storage = S3Storage()
-        self.s3_storage.init_app(app)
+        self.s3_storage.init_app(self.app)
         super().setUp()
 
     def define_models(self):
