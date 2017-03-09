@@ -6,6 +6,7 @@ from sqlalchemy import Column, Integer
 
 TEMP_IMAGES_DIR = 'tests/temp_images/'
 
+
 class TestField(BaseTest):
 
     def define_models(self):

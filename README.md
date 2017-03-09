@@ -2,7 +2,7 @@ Flask-ImageAlchemy
 ===============================
 [![Build Status](https://travis-ci.org/rstit/flask-image-alchemy.svg?branch=master)](https://travis-ci.org/rstit/flask-image-alchemy)
 
-version number: 0.0.6
+version number: 0.0.7
 
 Overview
 --------
@@ -14,6 +14,7 @@ Features
 - Storage backends (FileStorage, S3Storage)
 - Thumbnails (wand)
 - Flask Application Factory compatible
+-
 
 Installation
 --------------------

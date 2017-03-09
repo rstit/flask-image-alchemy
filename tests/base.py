@@ -8,7 +8,8 @@ from sqlalchemy.orm import sessionmaker
 
 class BaseTest(TestCase):
     def setUp(self):
-        self.engine = create_engine('postgresql+psycopg2://localhost:5432/test')
+        # self.engine = create_engine('postgresql+psycopg2://localhost:5432/test')
+        self.engine = create_engine('postgresql+psycopg2://reticool:postgres@localhost:5432/flask_image')
         self.Base = declarative_base()
         Session = sessionmaker(bind=self.engine)
         self.define_models()
