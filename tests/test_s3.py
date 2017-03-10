@@ -1,8 +1,10 @@
 from unittest.mock import patch
 
 from flask import Flask
+from sqlalchemy.event import listen
 from werkzeug.datastructures import FileStorage
 
+from flask_image_alchemy.events import before_update_delete_callback, before_delete_delete_callback
 from flask_image_alchemy.storages import S3Storage
 from .base import BaseTest
 from flask_image_alchemy.fields import StdImageField, StdImageFile
@@ -60,6 +62,100 @@ class TestS3Storage(BaseTest):
             self.assertIsInstance(u.avatar.thumbnail, StdImageFile)
             self.assertIsNotNone(u.avatar.thumbnail.url)
             self.assertIsNotNone(u.avatar.thumbnail.path)
+
+    @patch('botocore.client.BaseClient._make_api_call')
+    def test_update(self, client):
+        with open(TEMP_IMAGES_DIR + 'python_logo.png', 'rb') as file:
+            file = FileStorage(file)
+            u = self.User()
+            u.avatar = file
+            self.session.add(u)
+            self.session.commit()
+
+            _old_avatar_url = u.avatar.url
+            _old_avatar_path = u.avatar.path
+            _old_thumbnail_url = u.avatar.thumbnail.url
+            _old_thumbnail_path = u.avatar.thumbnail.path
+
+            u.avatar = file
+            self.session.add(u)
+            self.session.commit()
+
+            self.assertIsInstance(u.avatar, StdImageFile)
+            self.assertIsNotNone(u.avatar.url)
+            self.assertIsNotNone(u.avatar.path)
+            self.assertIsInstance(u.avatar.thumbnail, StdImageFile)
+            self.assertIsNotNone(u.avatar.thumbnail.url)
+            self.assertIsNotNone(u.avatar.thumbnail.path)
+            self.assertNotEqual(_old_avatar_url, u.avatar.url)
+            self.assertNotEqual(_old_avatar_path, u.avatar.path)
+            self.assertNotEqual(_old_thumbnail_url, u.avatar.thumbnail.url)
+            self.assertNotEqual(_old_thumbnail_path, u.avatar.thumbnail.path)
+
+            self.assertEqual(client.call_count, 4)  # 4x upload
+
+    @patch('botocore.client.BaseClient._make_api_call')
+    def test_update_with_signal(self, client):
+        listen(self.User, 'before_update', before_update_delete_callback)
+        with open(TEMP_IMAGES_DIR + 'python_logo.png', 'rb') as file:
+            file = FileStorage(file)
+            u = self.User()
+            u.avatar = file
+            self.session.add(u)
+            self.session.commit()
+
+            _old_avatar_url = u.avatar.url
+            _old_avatar_path = u.avatar.path
+            _old_thumbnail_url = u.avatar.thumbnail.url
+            _old_thumbnail_path = u.avatar.thumbnail.path
+
+            u.avatar = file
+            self.session.add(u)
+            self.session.commit()
+
+            self.assertIsInstance(u.avatar, StdImageFile)
+            self.assertIsNotNone(u.avatar.url)
+            self.assertIsNotNone(u.avatar.path)
+            self.assertIsInstance(u.avatar.thumbnail, StdImageFile)
+            self.assertIsNotNone(u.avatar.thumbnail.url)
+            self.assertIsNotNone(u.avatar.thumbnail.path)
+            self.assertNotEqual(_old_avatar_url, u.avatar.url)
+            self.assertNotEqual(_old_avatar_path, u.avatar.path)
+            self.assertNotEqual(_old_thumbnail_url, u.avatar.thumbnail.url)
+            self.assertNotEqual(_old_thumbnail_path, u.avatar.thumbnail.path)
+
+            self.assertEqual(client.call_count, 6)  # 4x upload, 2x delete
+
+    @patch('botocore.client.BaseClient._make_api_call')
+    def test_delete(self, client):
+        with open(TEMP_IMAGES_DIR + 'python_logo.png', 'rb') as file:
+            file = FileStorage(file)
+            u = self.User()
+            u.avatar = file
+            self.session.add(u)
+            self.session.commit()
+
+            u.avatar.delete(variations=True)
+            u.avatar = None
+            self.session.add(u)
+            self.session.commit()
+
+            self.assertEqual(client.call_count, 4)  # 2x upload, 2x delete
+
+    @patch('botocore.client.BaseClient._make_api_call')
+    def test_delete_with_signal(self, client):
+        listen(self.User, 'before_delete', before_delete_delete_callback)
+        with open(TEMP_IMAGES_DIR + 'python_logo.png', 'rb') as file:
+            file = FileStorage(file)
+            u = self.User()
+            u.avatar = file
+            self.session.add(u)
+            self.session.commit()
+
+            self.session.delete(u)
+            self.session.commit()
+
+            self.assertEqual(client.call_count, 4)  # 2x upload, 2x delete
 
     @patch('botocore.client.BaseClient._make_api_call')
     def cleanUp(self, client):

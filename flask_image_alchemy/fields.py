@@ -11,6 +11,7 @@ class StdImageFile:
     _variations = []
 
     def __init__(self, storage, json_data):
+        self._variations.clear()
         self.storage = storage
         self.json_data = json_data
         self._set_attributes()
@@ -40,10 +41,10 @@ class StdImageFile:
             self._variations.append(url)
 
     def delete(self, variations=False):
-        self.storage.delete(self.url)
+        self.storage.delete(self.path)
         if variations:
-            for url in self._variations:
-                self.storage.delete(url)
+            for path in self._variations:
+                self.storage.delete(path)
 
 
 class StdImageField(types.TypeDecorator):
