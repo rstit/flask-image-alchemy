@@ -76,11 +76,10 @@ u.avatar.thumbnail.path
 ```
 #### Deleting images
 
-Django dropped support for automated deletions in version 1.3. Implementing file deletion should 
-be done inside your own applications using the `before_delete` signal. Clearing the field if blank is 
-true, does not delete the file. This can also be achieved using `before_update` signals. This 
-packages contains two event callback methods that handle file deletion for all SdtImageFields of a 
-model.
+Implementing file deletion should be done inside your own applications using the `before_delete` 
+signal. Clearing the field if blank is true, does not delete the file. This can also be achieved 
+using `before_update` signals. This packages contains two event callback methods that handle file 
+deletion for all SdtImageFields of a model.
 
 ```python
 from flask_image_alchemy.events import before_update_delete_callback, before_delete_delete_callback
