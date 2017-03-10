@@ -135,7 +135,7 @@ class TestS3Storage(BaseTest):
             self.session.add(u)
             self.session.commit()
 
-            u.avatar.delete()
+            u.avatar.delete(variations=True)
             u.avatar = None
             self.session.add(u)
             self.session.commit()
