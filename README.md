@@ -49,7 +49,7 @@ class User(db.Model):
     )
 ```
 #### Flask Settings
-If you need S3Starage, set up config in your flask application:
+If you need S3Storage, set up config in your flask application:
 ```python
 AWS_ACCESS_KEY_ID = "you-api-key"
 AWS_SECRET_ACCESS_KEY = "you-secret-key"
