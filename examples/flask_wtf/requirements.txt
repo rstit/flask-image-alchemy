@@ -2,5 +2,5 @@ flask
 flask-wtf
 flask-sqlalchemy
 flask-image-alchemy
-SQLAlchemy==1.1.5
+SQLAlchemy==1.3.0
 psycopg2
